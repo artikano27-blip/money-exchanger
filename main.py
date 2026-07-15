@@ -7,11 +7,10 @@ def main():
     exchanger_model = exchanger_Model("exchanger_database.db")
     exchanger_service = exchanger_Service(exchanger_model)
 
-
-    # Создаем сервер, привязываем его к адресу localhost:8000 и передаем наш класс-обработчик
-    server = HTTPServer(('localhost', 8000), exchanger_Controller)
+    # Указываем 0.0.0.0 для приема внешних подключений со всех интерфейсов
+    server = HTTPServer(('0.0.0.0', 8000), exchanger_Controller)
     server.exchanger_service = exchanger_service
-    print("Сервер запущен на http://localhost:8000/currencies")
+    print("Сервер запущен на порту 8000 и принимает внешние подключения")
     # Запускаем бесконечный цикл прослушивания сети
     server.serve_forever()
 
