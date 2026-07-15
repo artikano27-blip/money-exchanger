@@ -11,6 +11,12 @@ class exchanger_Controller(BaseHTTPRequestHandler):
         cur_code = path_parts[2]
         return cur_code
 
+    def end_headers(self):
+        # Добавляем наш заголовок
+        self.send_header('Access-Control-Allow-Origin', '*')
+        # Вызываем оригинальный метод для завершения работы
+        super().end_headers()
+
     def do_GET(self):
         service = self.server.exchanger_service
         if self.path == "/currencies":
