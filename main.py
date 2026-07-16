@@ -10,7 +10,7 @@ def main():
     exchanger_service = exchanger_Service(exchanger_model)
     sqlite3.register_adapter(Decimal, str)
     # Указываем 0.0.0.0 для приема внешних подключений со всех интерфейсов
-    server = HTTPServer(('0.0.0.0', 8000), exchanger_Controller)
+    server = HTTPServer(('127.0.0.1', 8000), exchanger_Controller)
     server.exchanger_service = exchanger_service
     print("Сервер запущен на порту 8000 и принимает внешние подключения")
     # Запускаем бесконечный цикл прослушивания сети

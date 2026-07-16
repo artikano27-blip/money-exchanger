@@ -150,18 +150,8 @@ class exchanger_Service():
             raise DatabaseNotFoundError("Одна (или обе) валюта из валютной пары не существует в БД")
 
         dto_exchange_currency = ExchangeResultDTO(
-            baseCurrency=CurrencyDTO(
-                id = base_code_info[0],
-                name = base_code_info[1],
-                code = base_code_info[2],
-                sign = base_code_info[3]
-            ),
-            targetCurrency=CurrencyDTO(
-                id=target_code_info[0],
-                name=target_code_info[1],
-                code=target_code_info[2],
-                sign=target_code_info[3],
-            ),
+            baseCurrency=CurrencyDTO(*base_code_info),
+            targetCurrency=CurrencyDTO(*target_code_info),
             rate= float(decimal_rate),
             amount=float(amount),
             convertedAmount=final_amount

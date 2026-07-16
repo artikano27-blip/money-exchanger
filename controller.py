@@ -8,6 +8,14 @@ from service import DatabaseNotFoundError
 
 
 class exchanger_Controller(BaseHTTPRequestHandler):
+    timeout = 10
+
+    def handle(self):
+        try:
+            super().handle()
+        except TimeoutError:
+            print("Соединение сброшено по таймауту (скорее всего бот-сканер)")
+
     def extract_code(self):
         path_parts = self.path.split("/")
         cur_code = path_parts[2]
