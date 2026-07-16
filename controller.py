@@ -11,11 +11,20 @@ class exchanger_Controller(BaseHTTPRequestHandler):
         cur_code = path_parts[2]
         return cur_code
 
-    def end_headers(self):
-        # Добавляем наш заголовок
+    def do_OPTIONS(self):
+        # Отвечаем браузеру, что сервер жив и готов к общению
+        self.send_response(200)
+
+        # Разрешаем запросы с любых адресов (или укажи конкретный адрес твоего фронтенда)
         self.send_header('Access-Control-Allow-Origin', '*')
-        # Вызываем оригинальный метод для завершения работы
-        super().end_headers()
+
+        # Разрешаем нужные HTTP-методы, включая PATCH для обновления курсов
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PATCH, OPTIONS')
+
+        # Разрешаем отправлять нестандартные заголовки (например, Content-Type для JSON/форм)
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+
+        self.end_headers()
 
     def do_GET(self):
         service = self.server.exchanger_service

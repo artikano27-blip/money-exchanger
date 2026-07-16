@@ -21,4 +21,4 @@ class ExchangeResultDTO:
     targetCurrency: CurrencyDTO
     rate: decimal
     amount: decimal
-    converted_amount: decimal
+    convertedAmount: decimal

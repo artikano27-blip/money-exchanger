@@ -158,6 +158,6 @@ class exchanger_Service():
             ),
             rate= decimal_rate,
             amount=Decimal(amount),
-            converted_amount=decimal_amount
+            convertedAmount=decimal_amount
         )
         return dto_exchange_currency
