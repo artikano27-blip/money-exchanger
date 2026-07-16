@@ -1,7 +1,8 @@
 from decimal import Decimal
 
 from dto import CurrencyDTO, ExchangeRatesDTO, ExchangeResultDTO
-
+class DatabaseNotFoundError(Exception):
+    pass
 
 class exchanger_Service():
     def __init__(self, model):
@@ -33,7 +34,7 @@ class exchanger_Service():
     def get_currency(self, cur_code):
         row_currency = self.model.get_currency(cur_code)
         if row_currency is None:
-            return None
+            raise DatabaseNotFoundError("Одна (или обе) валюта из валютной пары не существует в БД")
         else:
             dto_currency = CurrencyDTO(
                 id=row_currency[0],
@@ -48,7 +49,7 @@ class exchanger_Service():
         target_cur_data = self.get_currency(target_currency_code)
 
         if base_cur_data is None or target_cur_data is None:
-            raise ValueError("Одна (или обе) валюта из валютной пары не существует в БД")
+            raise DatabaseNotFoundError("Одна (или обе) валюта из валютной пары не существует в БД")
 
         target_id = target_cur_data.id
         base_id = base_cur_data.id
@@ -87,6 +88,9 @@ class exchanger_Service():
 
     def get_exchange_rate(self, base_code, target_code):
         row_exchange_rate = self.model.get_exchange_rate(base_code, target_code)
+        if row_exchange_rate is None:
+            raise DatabaseNotFoundError("Одна (или обе) валюта из валютной пары не существует в БД")
+
         dto_exchange_rate = ExchangeRatesDTO(
             id=row_exchange_rate[0],
             baseCurrency=CurrencyDTO(
@@ -109,7 +113,7 @@ class exchanger_Service():
     def update_exchange_rate(self, base_code, target_code, new_rate):
         row_exchange_rate = self.model.update_exchange_rate(base_code, target_code, new_rate)
         if row_exchange_rate==0:
-            return
+            raise DatabaseNotFoundError("Одна (или обе) валюта из валютной пары не существует в БД")
         else:
             return self.get_exchange_rate(base_code, target_code)
 
@@ -141,7 +145,7 @@ class exchanger_Service():
             decimal_amount = converted_amount.quantize(Decimal("0.01"))
 
         else:
-            return
+            raise DatabaseNotFoundError("Одна (или обе) валюта из валютной пары не существует в БД")
 
         dto_exchange_currency = ExchangeResultDTO(
             baseCurrency=CurrencyDTO(
