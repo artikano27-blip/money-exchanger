@@ -60,7 +60,7 @@ class exchanger_Service():
             id=new_id,
             baseCurrency=base_cur_data,
             targetCurrency=target_cur_data,
-            rate=rate
+            rate=float(rate)
         )
         return dto_exchange_rate
 
@@ -82,7 +82,7 @@ class exchanger_Service():
                     code=item[8],
                     sign=item[9]
                 ),
-                rate=item[1]
+                rate=float(item[1])
             )
             dto_exchange_rates.append(dto_exchange_rate)
         return dto_exchange_rates
