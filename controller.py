@@ -204,7 +204,7 @@ class exchanger_Controller(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(error_response).encode('utf-8'))
 
             except sqlite3.IntegrityError:
-                self.send_response(409)
+                self._send_cors_headers(409)
                 error_response = {"message": "Валютная пара с таким кодом уже существует"}
                 self.wfile.write(json.dumps(error_response).encode('utf-8'))
 
