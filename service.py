@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+
 from dto import CurrencyDTO, ExchangeRatesDTO, ExchangeResultDTO
 class DatabaseNotFoundError(Exception):
     pass
@@ -143,6 +144,7 @@ class exchanger_Service():
             decimal_rate = Decimal(final_rate).quantize(Decimal("0.000001"))
             converted_amount = Decimal(amount)*decimal_rate
             decimal_amount = converted_amount.quantize(Decimal("0.01"))
+            final_amount = round(float(decimal_amount), 2)
 
         else:
             raise DatabaseNotFoundError("Одна (или обе) валюта из валютной пары не существует в БД")
@@ -160,8 +162,8 @@ class exchanger_Service():
                 code=target_code_info[2],
                 sign=target_code_info[3],
             ),
-            rate= decimal_rate,
-            amount=Decimal(amount),
-            convertedAmount=decimal_amount
+            rate= float(decimal_rate),
+            amount=float(amount),
+            convertedAmount=final_amount
         )
         return dto_exchange_currency

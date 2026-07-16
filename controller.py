@@ -120,9 +120,9 @@ class exchanger_Controller(BaseHTTPRequestHandler):
                 try:
                     base_code = parsed_dict["from"][0]
                     target_code = parsed_dict["to"][0]
-                    amount = parsed_dict["amount"][0]
+                    amount = Decimal(parsed_dict["amount"][0])
 
-                except (KeyError, ValueError) as error_msg:
+                except (KeyError, InvalidOperation) as error_msg:
                     self._send_cors_headers(400)
                     error_response = {"message": f"Неверный формат данных: {str(error_msg)}"}
                     self.wfile.write(json.dumps(error_response).encode('utf-8'))

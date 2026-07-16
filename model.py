@@ -1,5 +1,5 @@
 import sqlite3
-from multiprocessing import connection
+
 
 
 class exchanger_Model:

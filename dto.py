@@ -19,6 +19,6 @@ class ExchangeRatesDTO:
 class ExchangeResultDTO:
     baseCurrency: CurrencyDTO
     targetCurrency: CurrencyDTO
-    rate: decimal
-    amount: decimal
-    convertedAmount: decimal
+    rate: float
+    amount: float
+    convertedAmount: float
